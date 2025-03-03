@@ -8,7 +8,7 @@ class EmployeeEntity {
   final String name;
   final String email;
   final String phone;
-  final String username;
+  final String uid; // username
   final String password;
 
   EmployeeEntity({
@@ -17,11 +17,11 @@ class EmployeeEntity {
     required this.email,
     required this.phone,
     required this.password,
-    required this.username,
+    required this.uid,
   });
 
   @override
   String toString() {
-    return 'Employee(id: $id, uid: $username, name: $name)';
+    return 'Employee(id: $id, uid: $uid, name: $name)';
   }
 }

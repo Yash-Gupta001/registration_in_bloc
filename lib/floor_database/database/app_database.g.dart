@@ -72,7 +72,7 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  EmployeeDao? _employeeDaoInstance;
+  UserDao? _usereDaoInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `employee_entity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `phone` TEXT NOT NULL, `uid` TEXT NOT NULL, `password` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `user_entity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `phone` TEXT NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -105,49 +105,49 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  EmployeeDao get employeeDao {
-    return _employeeDaoInstance ??= _$EmployeeDao(database, changeListener);
+  UserDao get usereDao {
+    return _usereDaoInstance ??= _$UserDao(database, changeListener);
   }
 }
 
-class _$EmployeeDao extends EmployeeDao {
-  _$EmployeeDao(
+class _$UserDao extends UserDao {
+  _$UserDao(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _employeeEntityInsertionAdapter = InsertionAdapter(
+        _userEntityInsertionAdapter = InsertionAdapter(
             database,
-            'employee_entity',
-            (EmployeeEntity item) => <String, Object?>{
+            'user_entity',
+            (UserEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
                   'email': item.email,
                   'phone': item.phone,
-                  'uid': item.uid,
+                  'username': item.username,
                   'password': item.password
                 }),
-        _employeeEntityUpdateAdapter = UpdateAdapter(
+        _userEntityUpdateAdapter = UpdateAdapter(
             database,
-            'employee_entity',
+            'user_entity',
             ['id'],
-            (EmployeeEntity item) => <String, Object?>{
+            (UserEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
                   'email': item.email,
                   'phone': item.phone,
-                  'uid': item.uid,
+                  'username': item.username,
                   'password': item.password
                 }),
-        _employeeEntityDeletionAdapter = DeletionAdapter(
+        _userEntityDeletionAdapter = DeletionAdapter(
             database,
-            'employee_entity',
+            'user_entity',
             ['id'],
-            (EmployeeEntity item) => <String, Object?>{
+            (UserEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
                   'email': item.email,
                   'phone': item.phone,
-                  'uid': item.uid,
+                  'username': item.username,
                   'password': item.password
                 });
 
@@ -157,85 +157,83 @@ class _$EmployeeDao extends EmployeeDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<EmployeeEntity> _employeeEntityInsertionAdapter;
+  final InsertionAdapter<UserEntity> _userEntityInsertionAdapter;
 
-  final UpdateAdapter<EmployeeEntity> _employeeEntityUpdateAdapter;
+  final UpdateAdapter<UserEntity> _userEntityUpdateAdapter;
 
-  final DeletionAdapter<EmployeeEntity> _employeeEntityDeletionAdapter;
+  final DeletionAdapter<UserEntity> _userEntityDeletionAdapter;
 
   @override
-  Future<List<EmployeeEntity>> findAllEmployees() async {
-    return _queryAdapter.queryList('SELECT * FROM employee_entity',
-        mapper: (Map<String, Object?> row) => EmployeeEntity(
+  Future<List<UserEntity>> findAllEmployees() async {
+    return _queryAdapter.queryList('SELECT * FROM user_entity',
+        mapper: (Map<String, Object?> row) => UserEntity(
             id: row['id'] as int?,
             name: row['name'] as String,
             email: row['email'] as String,
             phone: row['phone'] as String,
             password: row['password'] as String,
-            uid: row['uid'] as String));
+            username: row['username'] as String));
   }
 
   @override
-  Future<List<EmployeeEntity>> printAllEmployees() async {
-    return _queryAdapter.queryList('SELECT * FROM employee_entity',
-        mapper: (Map<String, Object?> row) => EmployeeEntity(
+  Future<List<UserEntity>> printAllEmployees() async {
+    return _queryAdapter.queryList('SELECT * FROM user_entity',
+        mapper: (Map<String, Object?> row) => UserEntity(
             id: row['id'] as int?,
             name: row['name'] as String,
             email: row['email'] as String,
             phone: row['phone'] as String,
             password: row['password'] as String,
-            uid: row['uid'] as String));
+            username: row['username'] as String));
   }
 
   @override
-  Future<EmployeeEntity?> findEmployeeByUidAndPassword(
-    String uid,
+  Future<UserEntity?> findUserByusernameAndPassword(
+    String username,
     String password,
   ) async {
     return _queryAdapter.query(
-        'SELECT * FROM employee_entity WHERE uid = ?1 AND password = ?2',
-        mapper: (Map<String, Object?> row) => EmployeeEntity(
+        'SELECT * FROM user_entity WHERE username = ?1 AND password = ?2',
+        mapper: (Map<String, Object?> row) => UserEntity(
             id: row['id'] as int?,
             name: row['name'] as String,
             email: row['email'] as String,
             phone: row['phone'] as String,
             password: row['password'] as String,
-            uid: row['uid'] as String),
-        arguments: [uid, password]);
+            username: row['username'] as String),
+        arguments: [username, password]);
   }
 
   @override
-  Future<EmployeeEntity?> findEmployeeByUid(String uid) async {
-    return _queryAdapter.query('SELECT * FROM employee_entity WHERE uid = ?1',
-        mapper: (Map<String, Object?> row) => EmployeeEntity(
+  Future<UserEntity?> findUserByusername(String username) async {
+    return _queryAdapter.query('SELECT * FROM user_entity WHERE username = ?1',
+        mapper: (Map<String, Object?> row) => UserEntity(
             id: row['id'] as int?,
             name: row['name'] as String,
             email: row['email'] as String,
             phone: row['phone'] as String,
             password: row['password'] as String,
-            uid: row['uid'] as String),
-        arguments: [uid]);
+            username: row['username'] as String),
+        arguments: [username]);
   }
 
   @override
-  Future<void> deleteAllEmployees() async {
-    await _queryAdapter.queryNoReturn('DELETE FROM employee_entity');
+  Future<void> deleteAllUser() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM user_entity');
   }
 
   @override
-  Future<void> insertEmployee(EmployeeEntity employee) async {
-    await _employeeEntityInsertionAdapter.insert(
-        employee, OnConflictStrategy.abort);
+  Future<void> insertUser(UserEntity user) async {
+    await _userEntityInsertionAdapter.insert(user, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updateEmployee(EmployeeEntity employee) async {
-    await _employeeEntityUpdateAdapter.update(
-        employee, OnConflictStrategy.abort);
+  Future<void> updateUser(UserEntity user) async {
+    await _userEntityUpdateAdapter.update(user, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> deleteEmployee(EmployeeEntity employee) async {
-    await _employeeEntityDeletionAdapter.delete(employee);
+  Future<void> deleteUser(UserEntity user) async {
+    await _userEntityDeletionAdapter.delete(user);
   }
 }

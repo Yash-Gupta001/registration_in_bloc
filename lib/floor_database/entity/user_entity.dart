@@ -1,27 +1,27 @@
 import 'package:floor/floor.dart';
 
-@Entity(tableName: 'employee_entity')
-class EmployeeEntity {
+@Entity(tableName: 'user_entity')
+class UserEntity {
   @PrimaryKey(autoGenerate: true)
   int? id;
 
   final String name;
   final String email;
   final String phone;
-  final String uid; // username
+  final String username; 
   final String password;
 
-  EmployeeEntity({
+  UserEntity({
     this.id,
     required this.name,
     required this.email,
     required this.phone,
     required this.password,
-    required this.uid,
+    required this.username,
   });
 
   @override
   String toString() {
-    return 'Employee(id: $id, uid: $uid, name: $name)';
+    return 'User(id: $id, uid: $username, name: $name)';
   }
 }

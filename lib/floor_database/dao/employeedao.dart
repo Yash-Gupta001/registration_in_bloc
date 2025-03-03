@@ -1,41 +1,41 @@
 import 'package:floor/floor.dart';
 
-import '../entity/employee_entity.dart';
+import '../entity/user_entity.dart';
 
 @dao
-abstract class EmployeeDao {
+abstract class UserDao {
 
-  // query find all employees
-  @Query('SELECT * FROM employee_entity')
-  Future<List<EmployeeEntity>> findAllEmployees();
+  // query find all user
+  @Query('SELECT * FROM user_entity')
+  Future<List<UserEntity>> findAllEmployees();
 
-  // print all employees
-  @Query('SELECT * FROM employee_entity')
-  Future<List<EmployeeEntity>> printAllEmployees();
+  // print all user
+  @Query('SELECT * FROM user_entity')
+  Future<List<UserEntity>> printAllEmployees();
 
-  // insert an employee
+  // insert an user
   @insert
-  Future<void> insertEmployee(EmployeeEntity employee);
+  Future<void> insertUser(UserEntity user);
 
-  // update an employee
+  // update an user
   @update
-  Future<void> updateEmployee(EmployeeEntity employee);
+  Future<void> updateUser(UserEntity user);
 
-  // delete an employee
+  // delete an user
   @delete
-  Future<void> deleteEmployee(EmployeeEntity employee);
+  Future<void> deleteUser(UserEntity user);
 
-  // Query to find an employee by their UID and password
+  // Query to find an user by their UID and password
   @Query(
-      'SELECT * FROM employee_entity WHERE uid = :uid AND password = :password')
-  Future<EmployeeEntity?> findEmployeeByUidAndPassword(
-      String uid, String password);
+      'SELECT * FROM user_entity WHERE username = :username AND password = :password')
+  Future<UserEntity?> findUserByusernameAndPassword(
+      String username, String password);
 
-  // Query to find an employee by their UID
-  @Query('SELECT * FROM employee_entity WHERE uid = :uid')
-  Future<EmployeeEntity?> findEmployeeByUid(String uid);
+  // Query to find an User by their UID
+  @Query('SELECT * FROM user_entity WHERE username = :username')
+  Future<UserEntity?> findUserByusername(String username);
 
-  // delete all employees from the database
-  @Query('DELETE FROM employee_entity')
-  Future<void> deleteAllEmployees();
+  // delete all user from the database
+  @Query('DELETE FROM user_entity')
+  Future<void> deleteAllUser();
 }

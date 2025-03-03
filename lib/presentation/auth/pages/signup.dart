@@ -27,7 +27,6 @@ class SignupPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 // Name TextField
                 TextField(
                   controller: nameController,
@@ -82,20 +81,21 @@ class SignupPage extends StatelessWidget {
                 TextField(
                   controller: passwordController,
                   autofocus: false,
-                  obscureText: true,
+                  obscureText: true, // obscuretext is used to hide the typed words
                   decoration: InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.lock),
                   ),
                 ), 
-                SizedBox(height: 10),
 
                 SizedBox(height: 30),
+
+                // Register Button inside Column
                 CustomElevatedButton(
                   title: 'Register', 
                   onPressed: () {
-                    // You can gather the values here and pass them to your logic
+                    // gather the values here and pass them to logic
                     String name = nameController.text;
                     String email = emailController.text;
                     String phone = phoneController.text;

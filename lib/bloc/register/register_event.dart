@@ -1,9 +1,18 @@
 abstract class RegisterEvent {}
 
 class RegisterButtonPressed extends RegisterEvent {
-  final String username;
+  final String name;
+  final String email;
+  final String phone;
+  final String username; 
   final String password;
-
-  RegisterButtonPressed({required this.username, required this.password});
+  
+  RegisterButtonPressed(
+    this.name,
+    this.email,
+    this.phone,
+    this.username, 
+    this.password
+    );
 }
 

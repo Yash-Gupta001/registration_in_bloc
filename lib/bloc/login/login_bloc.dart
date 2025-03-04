@@ -19,15 +19,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
         if (user != null) {
           yield LoginSuccess(user: user);
-        } 
-        else {
+        } else {
           yield LoginFailure(error: 'Invalid username or password');
         }
-      } 
-      catch (error) {
+      } catch (error) {
         yield LoginFailure(error: error.toString());
       }
     }
   }
-
+  
 }

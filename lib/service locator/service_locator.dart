@@ -1,15 +1,22 @@
 import 'package:get_it/get_it.dart';
 import 'package:registration_in_bloc/floor_database/database/app_database.dart';
+import 'package:registration_in_bloc/floor_database/dao/userdao.dart';
+import 'package:registration_in_bloc/repository/user_repository.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setup() async {
-  // Initialize the database
-  getIt.registerSingletonAsync<AppDatabase>(() async {
-    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-    return database;
+  // Register AppDatabase
+  getIt.registerLazySingletonAsync<AppDatabase>(() async {
+    return await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   });
 
-  // Ensure the database is initialized before registering other dependencies
+  // Register UserDao
+  getIt.registerLazySingleton<UserDao>(() => getIt<AppDatabase>().usereDao);
+
+  // Register UserRepository
+  getIt.registerLazySingleton<UserRepository>(() => UserRepository(userDao: getIt<UserDao>()));
+
+  // Ensure AppDatabase is ready before continuing
   await getIt.isReady<AppDatabase>();
 }

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:registration_in_bloc/floor_database/database/app_database.dart';
 import 'package:registration_in_bloc/presentation/auth/pages/signup.dart';
+import 'package:registration_in_bloc/repository/user_repository.dart';
 import 'service locator/service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   try {
-    // Initialize dependency injection from service locator
+    // Initialize dependencies from service locator
     await setup();
-    runApp(const MyApp());
+    runApp(const MyApp()); 
   } catch (e) {
-    // ignore: avoid_print
     print('Failed to initialize app: $e');
   }
 }
@@ -22,8 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignupPage(),
-      
+      home: SignupPage(
+        database: GetIt.instance<AppDatabase>(),
+        userRepository: GetIt.instance<UserRepository>(),
+      ),
     );
   }
 }

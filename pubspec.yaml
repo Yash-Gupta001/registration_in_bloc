@@ -19,12 +19,12 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  bloc: ^9.0.0
   floor: ^1.5.0
   dio: ^5.8.0+1
   get_it: ^8.0.3
   double_back_to_close_app: ^2.1.0
   any: ^0.0.0
+  flutter_bloc: ^9.1.0
 
 dev_dependencies:
   flutter_test:

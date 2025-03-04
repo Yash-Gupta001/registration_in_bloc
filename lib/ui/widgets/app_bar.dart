@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:registration_in_bloc/ui/colors/colors.dart';
+import 'package:registration_in_bloc/ui/values/colors/colors.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

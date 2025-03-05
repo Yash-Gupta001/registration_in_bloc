@@ -15,4 +15,15 @@ class UserRepository {
       throw Exception('Authentication failed');
     }
   }
+
+  Future<UserEntity?> insertUser({required UserEntity user}) async {
+    try{
+     
+    }
+    catch(errror){
+      throw Exception('Failed to insert user');
+    }
+  }
+
+
 }

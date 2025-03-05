@@ -6,26 +6,28 @@ import '../../repository/user_repository.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
 
-  LoginBloc({required this.userRepository}) : super(LoginInitial());
+  LoginBloc({required this.userRepository}) : super(LoginInitial()) {
+    // Register the event handler for LoginButtonPressed
+    on<LoginButtonPressed>(_onLoginButtonPressed);
+  }
 
-  Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LoginButtonPressed) {
-      yield LoginLoading();
-
-      try {
-        final user = await userRepository.authenticate(
-          username: event.username,
-          password: event.password,
-        );
-        if (user != null) {
-          yield LoginSuccess(user: user);
-        } else {
-          yield LoginFailure(error: 'Invalid username or password');
-        }
-      } catch (error) {
-        yield LoginFailure(error: error.toString());
+  Future<void> _onLoginButtonPressed(
+    LoginButtonPressed event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(LoginLoading()); 
+    try {
+      final user = await userRepository.authenticate(
+        username: event.username,
+        password: event.password,
+      );
+      if (user != null) {
+        emit(LoginSuccess(user: user)); 
+      } else {
+        emit(LoginFailure(error: 'Invalid username or password')); 
       }
+    } catch (error) {
+      emit(LoginFailure(error: error.toString())); 
     }
   }
-  
 }

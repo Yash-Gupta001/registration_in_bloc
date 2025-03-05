@@ -151,7 +151,7 @@ class SignupPage extends StatelessWidget {
             (route) => false,
           );
         },
-        label: 'Already have an account? Login',
+        label: 'Login',
         iconData: Icons.login_sharp,
       ),
       ),

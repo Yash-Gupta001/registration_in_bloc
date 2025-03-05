@@ -32,6 +32,9 @@ class UserRepository {
     // Catch and rethrow any errors
     throw Exception('Failed to add user: $e');
   }
+
+
+  
 }
 
 

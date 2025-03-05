@@ -23,11 +23,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
       if (user != null) {
         emit(LoginSuccess(user: user)); 
-      } else {
+      } 
+      else {
         emit(LoginFailure(error: 'Invalid username or password')); 
       }
-    } catch (error) {
-      emit(LoginFailure(error: error.toString())); 
+    } 
+    catch (e) {
+      emit(LoginFailure(error: e.toString())); 
     }
   }
 }

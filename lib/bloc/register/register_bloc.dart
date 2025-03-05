@@ -16,7 +16,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     emit(RegisterLoading());
     try {
-      // Call the repository to add the user (does not return anything)
+      // Call the repository to add the user
       await userRepository.addUser(event.user);
 
       // Emit success directly with the user's information from the event

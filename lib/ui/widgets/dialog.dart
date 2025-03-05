@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../values/colors/colors.dart';
+
 class CustomDialog extends StatelessWidget {
   final String title;
   final String content;
@@ -25,11 +27,11 @@ class CustomDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
       ),
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: transparent,
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: black,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Column(
@@ -41,6 +43,7 @@ class CustomDialog extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: white,
               ),
             ),
             const SizedBox(height: 16),
@@ -50,6 +53,7 @@ class CustomDialog extends StatelessWidget {
               content,
               style: const TextStyle(
                 fontSize: 16,
+                color: white,
               ),
               textAlign: TextAlign.center,
             ),
@@ -65,7 +69,7 @@ class CustomDialog extends StatelessWidget {
                   child: Text(
                     cancelText,
                     style: const TextStyle(
-                      color: Colors.red,
+                      color: white,
                       fontSize: 16,
                     ),
                   ),
@@ -77,7 +81,7 @@ class CustomDialog extends StatelessWidget {
                   child: Text(
                     confirmText,
                     style: const TextStyle(
-                      color: Colors.blue,
+                      color: red,
                       fontSize: 16,
                     ),
                   ),

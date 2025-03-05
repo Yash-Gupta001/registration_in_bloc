@@ -111,12 +111,53 @@ class SignupPage extends StatelessWidget {
                             String username = usernameController.text;
                             String password = passwordController.text;
 
-                            // // Check if all fields are filled
-                            if (name.isEmpty || email.isEmpty || phone.isEmpty || username.isEmpty || password.isEmpty) {
+                            // Check if all fields are filled
+                            if (name.isEmpty ||
+                                email.isEmpty ||
+                                phone.isEmpty ||
+                                username.isEmpty ||
+                                password.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Please fill all fields')),
+                                SnackBar(
+                                    content: Text('Please fill all fields')),
                               );
                               return;
+                            }
+
+                            // Validate email format using regex
+                            String emailRegex =
+                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'; // Email regex pattern
+                            RegExp emailRegExp = RegExp(emailRegex);
+                            if (!emailRegExp.hasMatch(email)) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Please enter a valid email address')),
+                              );
+                              return;
+                            }
+
+                            // Validate phone number (exactly 10 digits)
+                            String phoneRegex =
+                                r'^\d{10}$'; // Phone number regex pattern for exactly 10 digits
+                            RegExp phoneRegExp = RegExp(phoneRegex);
+                            if (!phoneRegExp.hasMatch(phone)) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Please enter a valid 10-digit phone number')),
+                              );
+                              return;
+                            }
+
+                            if (password.length < 6) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Password must be at least 6 characters')),
+                              );
+                              return;
+
                             }
 
                             // Create a new UserEntity instance
@@ -129,9 +170,12 @@ class SignupPage extends StatelessWidget {
                             );
 
                             // Dispatch RegisterButtonPressed event
-                            context.read<RegisterBloc>().add(RegisterButtonPressed(user: newUser));
+                            context
+                                .read<RegisterBloc>()
+                                .add(RegisterButtonPressed(user: newUser));
                           },
                         ),
+
                         // Listen to the state to show loading, success, or failure
                         BlocListener<RegisterBloc, RegisterState>(
                           listener: (context, state) {
@@ -154,11 +198,13 @@ class SignupPage extends StatelessWidget {
                             } else if (state is RegisterFailure) {
                               // Show error message if registration fails
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error: ${state.error}')),
+                                SnackBar(
+                                    content: Text('Error: ${state.error}')),
                               );
                             }
                           },
-                          child: Container(), // Empty child as we're using it for state listening only
+                          child:
+                              Container(), // Empty child as we're using it for state listening only
                         ),
                       ],
                     ),

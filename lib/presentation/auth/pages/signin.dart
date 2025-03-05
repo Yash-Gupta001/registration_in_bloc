@@ -26,83 +26,87 @@ class SigninPage extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: CustomAppbar(title: 'Sign In', leading: false),
-          body: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Username TextField
-                  TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.account_circle),
+          body: GestureDetector(
+            onTap: () {
+               FocusScope.of(context).unfocus();
+               },       
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Username TextField
+                    TextField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.account_circle),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
+                    SizedBox(height: 10),
 
-                  // Password TextField
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock),
+                    // Password TextField
+                    TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.lock),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 30),
+                    SizedBox(height: 30),
 
-                  // BlocConsumer to handle states
-                  BlocConsumer<LoginBloc, LoginState>(
-                    listener: (context, state) {
-                      if (state is LoginFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.error)),
-                        );
-                      }
-                      if (state is LoginSuccess) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Userdetails(user: state.user),
-                          ),
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is LoginLoading) {
-                        return CircularProgressIndicator();
-                      }
+                    // BlocConsumer to handle states
+                    BlocConsumer<LoginBloc, LoginState>(
+                      listener: (context, state) {
+                        if (state is LoginFailure) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(state.error)),
+                          );
+                        }
+                        if (state is LoginSuccess) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Userdetails(user: state.user),
+                            ),
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is LoginLoading) {
+                          return CircularProgressIndicator();
+                        }
 
-                      return CustomElevatedButton(
-                        title: 'Login',
-                        onPressed: () {
-                          String username = usernameController.text;
-                          String password = passwordController.text;
+                        return CustomElevatedButton(
+                          title: 'Login',
+                          onPressed: () {
+                            String username = usernameController.text;
+                            String password = passwordController.text;
 
-                          // Validate input fields
-                          if (username.isEmpty || password.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Please fill all fields')),
-                            );
-                            return;
-                          }
-
-                          // Dispatch the LoginButtonPressed event
-                          context.read<LoginBloc>().add(
-                                LoginButtonPressed(
-                                  username: username,
-                                  password: password,
-                                ),
+                            // Validate input fields
+                            if (username.isEmpty || password.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Please fill all fields')),
                               );
-                        },
-                      );
-                    },
-                  ),
-                ],
+                              return;
+                            }
+                            // Dispatch the LoginButtonPressed event
+                            context.read<LoginBloc>().add(
+                                  LoginButtonPressed(
+                                    username: username,
+                                    password: password,
+                                  ),
+                                );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

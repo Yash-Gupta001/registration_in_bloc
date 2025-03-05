@@ -3,10 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:registration_in_bloc/floor_database/database/app_database.dart';
 import 'package:registration_in_bloc/floor_database/entity/user_entity.dart';
 import 'package:registration_in_bloc/repository/user_repository.dart';
-import 'package:registration_in_bloc/ui/widgets/app_bar.dart';
 import 'package:registration_in_bloc/ui/widgets/dialog.dart';
 import 'package:registration_in_bloc/ui/widgets/dialog_floatingaction_button.dart';
 import 'package:registration_in_bloc/presentation/auth/pages/signup.dart';
+
+import '../../ui/values/colors/colors.dart';
 
 class Userdetails extends StatelessWidget {
   final UserEntity user; // UserEntity object
@@ -19,28 +20,42 @@ class Userdetails extends StatelessWidget {
     final UserRepository userRepository = GetIt.instance<UserRepository>();
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppbar(
-          title: 'User Details',
-          leading: false,
-        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                'User Details',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: red
+                  ),
+              ),
+              SizedBox(height: 20),
+
               Text("ID: ${user.id}", 
               style: TextStyle(fontSize: 20)),
+              SizedBox(height: 10),
       
               Text("Name: ${user.name}", 
               style: TextStyle(fontSize: 20)),
+              SizedBox(height: 10),
       
               Text("Email: ${user.email}", 
               style: TextStyle(fontSize: 20)),
+              SizedBox(height: 10),
       
               Text("Phone: ${user.phone}", 
               style: TextStyle(fontSize: 20)),
+              SizedBox(height: 10),
       
               Text("Username: ${user.username}", 
               style: TextStyle(fontSize: 20)),
+              SizedBox(height: 10),
+
+              // Text("password: ${user.password}", 
+              // style: TextStyle(fontSize: 20)),
             ],
           ),
         ),

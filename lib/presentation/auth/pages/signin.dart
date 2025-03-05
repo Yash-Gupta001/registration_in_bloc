@@ -74,19 +74,12 @@ class SigninPage extends StatelessWidget {
                     },
                     builder: (context, state) {
                       if (state is LoginLoading) {
-                        return CircularProgressIndicator(); // Show loading indicator
+                        return CircularProgressIndicator();
                       }
-
-
-
 
                       return CustomElevatedButton(
                         title: 'Login',
                         onPressed: () {
-
-
-
-
                           String username = usernameController.text;
                           String password = passwordController.text;
 
@@ -100,22 +93,13 @@ class SigninPage extends StatelessWidget {
 
                           // Dispatch the LoginButtonPressed event
                           context.read<LoginBloc>().add(
-                            LoginButtonPressed(
-                              username: username,
-                              password: password,
-                            ),
-                          );
+                                LoginButtonPressed(
+                                  username: username,
+                                  password: password,
+                                ),
+                              );
                         },
-
-
-
-
-                        
                       );
-
-
-
-
                     },
                   ),
                 ],

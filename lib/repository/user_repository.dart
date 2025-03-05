@@ -5,7 +5,7 @@ class UserRepository {
   final UserDao userDao;
 
   UserRepository({required this.userDao});
-  // Your authenticate function where you query the database for user authentication
+  // authenticate function from you query the database for user authentication
   Future<UserEntity?> authenticate({required String username, required String password}) async {
     try {
       final user = await userDao.findUserByusernameAndPassword(username, password);
@@ -16,14 +16,24 @@ class UserRepository {
     }
   }
 
-  Future<UserEntity?> insertUser({required UserEntity user}) async {
-    try{
-     
+  Future<void> addUser(UserEntity user) async {
+  try {
+    // Check if the username already exists in the database
+    final existingUser = await userDao.findUserByusername(user.username);
+    
+    // If the user already exists, throw an exception
+    if (existingUser != null) {
+      throw Exception('Username already exists');
     }
-    catch(errror){
-      throw Exception('Failed to insert user');
-    }
+
+    // If the username doesn't exist, insert the new user
+    await userDao.insertUser(user);
+  } catch (e) {
+    // Catch and rethrow any errors
+    throw Exception('Failed to add user: $e');
   }
+}
+
 
 
 }

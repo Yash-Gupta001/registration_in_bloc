@@ -18,7 +18,7 @@ class AllRegisteredUsers extends StatelessWidget {
           leading: true,
         ),
         body: Container(
-          color: Colors.grey[100], // Light background color
+          color: black, // Light background color
           child: FutureBuilder<List<UserEntity>>(
             future: dao.findAllEmployees(),
             builder: (context, snapshot) {
@@ -35,9 +35,9 @@ class AllRegisteredUsers extends StatelessWidget {
                     padding: EdgeInsets.all(16), 
                     itemCount: users.length,
                     separatorBuilder: (context, index) => Divider(
-                      color: Colors.grey[300],
+                      color: black,
                       thickness: 1,
-                      height: 16,
+                      height: 10,
                     ),
                     itemBuilder: (context, index) {
                       final user = users[index];

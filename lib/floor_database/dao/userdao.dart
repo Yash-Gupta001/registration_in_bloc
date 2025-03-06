@@ -7,11 +7,11 @@ abstract class UserDao {
 
   // query find all user
   @Query('SELECT * FROM user_entity')
-  Future<List<UserEntity>> findAllEmployees();
+  Future<List<UserEntity>> findAllUsers();
 
   // print all user
   @Query('SELECT * FROM user_entity')
-  Future<List<UserEntity>> printAllEmployees();
+  Future<List<UserEntity>> printAllUsers();
 
   // insert an user
   @insert

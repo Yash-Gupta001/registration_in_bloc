@@ -164,7 +164,7 @@ class _$UserDao extends UserDao {
   final DeletionAdapter<UserEntity> _userEntityDeletionAdapter;
 
   @override
-  Future<List<UserEntity>> findAllEmployees() async {
+  Future<List<UserEntity>> findAllUsers() async {
     return _queryAdapter.queryList('SELECT * FROM user_entity',
         mapper: (Map<String, Object?> row) => UserEntity(
             id: row['id'] as int?,
@@ -176,7 +176,7 @@ class _$UserDao extends UserDao {
   }
 
   @override
-  Future<List<UserEntity>> printAllEmployees() async {
+  Future<List<UserEntity>> printAllUsers() async {
     return _queryAdapter.queryList('SELECT * FROM user_entity',
         mapper: (Map<String, Object?> row) => UserEntity(
             id: row['id'] as int?,

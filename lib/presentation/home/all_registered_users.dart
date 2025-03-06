@@ -14,13 +14,13 @@ class AllRegisteredUsers extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppbar(
-          title: 'All Users',
+          title: 'All Registered Users',
           leading: true,
         ),
         body: Container(
           color: black, // Light background color
           child: FutureBuilder<List<UserEntity>>(
-            future: dao.findAllEmployees(),
+            future: dao.findAllUsers(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -42,19 +42,19 @@ class AllRegisteredUsers extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final user = users[index];
                       return Card(
-                        elevation: 2, // Add shadow to the card
+                        elevation: 2, // to add shadow to the card we use elevation
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16), // Add padding inside the card
+                          padding: EdgeInsets.all(16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.person, color: red), // Add an icon
-                                  SizedBox(width: 8), // Add spacing
+                                  Icon(Icons.person, color: red), 
+                                  SizedBox(width: 8), 
                                   Text(
                                     'Username: ${user.name}',
                                     style: TextStyle(
@@ -65,7 +65,7 @@ class AllRegisteredUsers extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 8), // Add spacing
+                              SizedBox(height: 8), 
                               Text(
                                 'ID: ${user.id}',
                                 style: TextStyle(

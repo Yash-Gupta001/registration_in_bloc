@@ -14,12 +14,42 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterButtonPressed event,
     Emitter<RegisterState> emit,
   ) async {
+    // Validate fields
+    if (event.user.name.isEmpty ||
+        event.user.email.isEmpty ||
+        event.user.phone.isEmpty ||
+        event.user.username.isEmpty ||
+        event.user.password.isEmpty) {
+      emit(RegisterFailure(error: 'Please fill all fields'));
+      return;
+    }
+
+    // Validate email format
+    final emailRegex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+    if (!RegExp(emailRegex).hasMatch(event.user.email)) {
+      emit(RegisterFailure(error: 'Please enter a valid email address'));
+      return;
+    }
+
+    // Validate phone number (exactly 10 digits)
+    final phoneRegex = r'^\d{10}$';
+    if (!RegExp(phoneRegex).hasMatch(event.user.phone)) {
+      emit(RegisterFailure(error: 'Please enter a valid 10-digit phone number'));
+      return;
+    }
+
+    // Validate password length
+    if (event.user.password.length < 6) {
+      emit(RegisterFailure(error: 'Password must be at least 6 characters'));
+      return;
+    }
+
     emit(RegisterLoading());
     try {
       // Call the repository to add the user
       await userRepository.addUser(event.user);
 
-      // Emit success directly with the user's information from the event
+      // Emit success state
       emit(RegisterSuccess(
         name: event.user.name,
         email: event.user.email,
@@ -27,10 +57,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         username: event.user.username,
         password: event.user.password,
       ));
-    } 
-    catch (e) {
+    } catch (e) {
       // Emit failure state if there's an error
-      emit(RegisterFailure(error: e.toString()));
+      emit(RegisterFailure(error: 'Registration failed: ${e.toString()}'));
       print(e.toString());
     }
   }

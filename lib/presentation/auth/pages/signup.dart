@@ -103,76 +103,16 @@ class SignupPage extends StatelessWidget {
                         // Register Button
                         CustomElevatedButton(
                           title: 'Register',
-                          onPressed: () async {
-                            // Gather the values from the TextControllers
-                            String name = nameController.text;
-                            String email = emailController.text;
-                            String phone = phoneController.text;
-                            String username = usernameController.text;
-                            String password = passwordController.text;
-
-                            // Check if all fields are filled
-                            if (name.isEmpty ||
-                                email.isEmpty ||
-                                phone.isEmpty ||
-                                username.isEmpty ||
-                                password.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text('Please fill all fields')),
-                              );
-                              return;
-                            }
-
-                            // Validate email format using regex
-                            String emailRegex =
-                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'; // Email regex pattern
-                            RegExp emailRegExp = RegExp(emailRegex);
-                            if (!emailRegExp.hasMatch(email)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'Please enter a valid email address')),
-                              );
-                              return;
-                            }
-
-                            // Validate phone number (exactly 10 digits)
-                            String phoneRegex =
-                                r'^\d{10}$'; // Phone number regex pattern for exactly 10 digits
-                            RegExp phoneRegExp = RegExp(phoneRegex);
-                            if (!phoneRegExp.hasMatch(phone)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'Please enter a valid 10-digit phone number')),
-                              );
-                              return;
-                            }
-
-                            if (password.length < 6) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'Password must be at least 6 characters')),
-                              );
-                              return;
-
-                            }
-
-                            // Create a new UserEntity instance
+                          onPressed: () {
                             final newUser = UserEntity(
-                              name: name,
-                              email: email,
-                              phone: phone,
-                              username: username,
-                              password: password,
+                              name: nameController.text,
+                              email: emailController.text,
+                              phone: phoneController.text,
+                              username: usernameController.text,
+                              password: passwordController.text,
                             );
 
-                            // Dispatch RegisterButtonPressed event
-                            context
-                                .read<RegisterBloc>()
-                                .add(RegisterButtonPressed(user: newUser));
+                            context.read<RegisterBloc>().add(RegisterButtonPressed(user: newUser));
                           },
                         ),
 
@@ -180,12 +120,10 @@ class SignupPage extends StatelessWidget {
                         BlocListener<RegisterBloc, RegisterState>(
                           listener: (context, state) {
                             if (state is RegisterLoading) {
-                              // Show loading indicator
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('Registering...')),
                               );
                             } else if (state is RegisterSuccess) {
-                              // On success, navigate to the SignIn page
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -196,15 +134,12 @@ class SignupPage extends StatelessWidget {
                                 ),
                               );
                             } else if (state is RegisterFailure) {
-                              // Show error message if registration fails
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text('Error: ${state.error}')),
+                                SnackBar(content: Text('Error: ${state.error}')),
                               );
                             }
                           },
-                          child:
-                              Container(), // Empty child as we're using it for state listening only
+                          child: Container(),
                         ),
                       ],
                     ),

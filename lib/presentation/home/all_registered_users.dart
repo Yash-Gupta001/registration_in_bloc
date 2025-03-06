@@ -14,54 +14,98 @@ class AllRegisteredUsers extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppbar(
-          title: 'All users', 
-          leading: true
-          ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: FutureBuilder<List<UserEntity>>(
-                  future: dao.findAllEmployees(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Text('No users found');
-                    } else {
-                      final users = snapshot.data!;
-                      return ListView.builder(
-                        itemCount: users.length,
-                        itemBuilder: (context, index) {
-                          final user = users[index];
-                          return ListTile(
-                            title: Text(
-                              'username: ${user.name}',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: red,
-                                fontWeight: FontWeight.bold,
+          title: 'All Users',
+          leading: true,
+        ),
+        body: Container(
+          color: Colors.grey[100], // Light background color
+          child: FutureBuilder<List<UserEntity>>(
+            future: dao.findAllEmployees(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(child: Text('No users found'));
+              } else {
+                final users = snapshot.data!;
+                return Scrollbar(
+                  child: ListView.separated(
+                    padding: EdgeInsets.all(16), 
+                    itemCount: users.length,
+                    separatorBuilder: (context, index) => Divider(
+                      color: Colors.grey[300],
+                      thickness: 1,
+                      height: 16,
+                    ),
+                    itemBuilder: (context, index) {
+                      final user = users[index];
+                      return Card(
+                        elevation: 2, // Add shadow to the card
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(16), // Add padding inside the card
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.person, color: red), // Add an icon
+                                  SizedBox(width: 8), // Add spacing
+                                  Text(
+                                    'Username: ${user.name}',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            subtitle: Text(
-                              ' email: ${user.email}\n phone: ${user.phone}\n password: ${user.password}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: black,
-                              )
-                              ,
-                            ),
-                          );
-                        },
+                              SizedBox(height: 8), // Add spacing
+                              Text(
+                                'ID: ${user.id}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: black,
+                                ),
+                              ),
+                              SizedBox(height: 4), // Add spacing
+                              Text(
+                                'Email: ${user.email}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: black,
+                                ),
+                              ),
+                              SizedBox(height: 4), // Add spacing
+                              Text(
+                                'Phone: ${user.phone}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: black,
+                                ),
+                              ),
+                              SizedBox(height: 4), // Add spacing
+                              Text(
+                                'Password: ${user.password}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       );
-                    }
-                  },
-                ),
-              ),
-            ],
+                    },
+                  ),
+                );
+              }
+            },
           ),
         ),
       ),

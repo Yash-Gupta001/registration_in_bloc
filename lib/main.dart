@@ -15,7 +15,7 @@ void main() async {
   } catch (e) {
     // Handle the error in case setup fails
     print('Failed to initialize app: $e');
-    runApp(const MyApp(isError: true));  // Run app with an error state
+    runApp(const MyApp(isError: true));
   }
 }
 
@@ -29,7 +29,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: isError
-          ? Scaffold(body: Center(child: Text("Failed to load app, please try again later.")))
+          ? Scaffold(body: 
+          Center(
+            child: Text(
+              "Failed to load app, please try again later."
+              )))
           : SignupPage(
               database: GetIt.instance<AppDatabase>(),
               userRepository: GetIt.instance<UserRepository>(),

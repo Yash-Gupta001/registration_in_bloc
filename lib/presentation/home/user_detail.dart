@@ -23,42 +23,56 @@ class Userdetails extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'User Details',
-                style: TextStyle(
-                    fontSize: 30, fontWeight: FontWeight.bold, color: red),
+          child: Card(
+            elevation: 4, // Add shadow to the card
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12), // Rounded corners
+            ),
+            margin: EdgeInsets.all(16), // Add margin around the card
+            child: Padding(
+              padding: EdgeInsets.all(20), // Add padding inside the card
+              child: Column(
+                mainAxisSize: MainAxisSize
+                    .min, // Make the column take only the space it needs
+                children: [
+                  Text(
+                    'User Details',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: red,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  // User details with icons
+                  _buildDetailRow(Icons.person_outline, 'ID: ${user.id}'),
+                  SizedBox(height: 10),
+                  _buildDetailRow(Icons.person, 'Name: ${user.name}'),
+                  SizedBox(height: 10),
+                  _buildDetailRow(Icons.email, 'Email: ${user.email}'),
+                  SizedBox(height: 10),
+                  _buildDetailRow(Icons.phone, 'Phone: ${user.phone}'),
+                  SizedBox(height: 10),
+                  _buildDetailRow(
+                      Icons.person_pin, 'Username: ${user.username}'),
+                  SizedBox(height: 20),
+
+                  // Custom Elevated Button
+                  CustomElevatedButton(
+                    title: 'All Registered Users',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AllRegisteredUsers(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-              SizedBox(height: 20),
-
-              Text("ID: ${user.id}", style: TextStyle(fontSize: 20)),
-              SizedBox(height: 10),
-
-              Text("Name: ${user.name}", style: TextStyle(fontSize: 20)),
-              SizedBox(height: 10),
-
-              Text("Email: ${user.email}", style: TextStyle(fontSize: 20)),
-              SizedBox(height: 10),
-
-              Text("Phone: ${user.phone}", style: TextStyle(fontSize: 20)),
-              SizedBox(height: 10),
-
-              Text("Username: ${user.username}",
-                  style: TextStyle(fontSize: 20)),
-              SizedBox(height: 10),
-
-              // Text("password: ${user.password}",
-              // style: TextStyle(fontSize: 20)),
-
-              CustomElevatedButton(title: 'all registered users', onPressed: (){
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => AllRegisteredUsers()
-                  ));
-
-              })
-            ],
+            ),
           ),
         ),
         floatingActionButton: DialogCustomFloatingActionButton(
@@ -96,4 +110,21 @@ class Userdetails extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildDetailRow(IconData icon, String text) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center, // Center the row content
+    children: [
+      Icon(icon, color: red), // Add an icon
+      SizedBox(width: 10), // Add spacing
+      Text(
+        text,
+        style: TextStyle(
+          fontSize: 18,
+          color: black,
+        ),
+      ),
+    ],
+  );
 }

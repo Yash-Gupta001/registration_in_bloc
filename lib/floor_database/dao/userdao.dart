@@ -26,8 +26,7 @@ abstract class UserDao {
   Future<void> deleteUser(UserEntity user);
 
   // Query to find an user by their UID and password
-  @Query(
-      'SELECT * FROM user_entity WHERE username = :username AND password = :password')
+  @Query('SELECT * FROM user_entity WHERE username = :username AND password = :password')
   Future<UserEntity?> findUserByusernameAndPassword(
       String username, String password);
 

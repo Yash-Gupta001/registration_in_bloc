@@ -24,7 +24,7 @@ class Userdetails extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: Card(
-            elevation: 4, // Add shadow to the card
+            elevation: 4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12), // Rounded corners
             ),
@@ -46,16 +46,26 @@ class Userdetails extends StatelessWidget {
                   SizedBox(height: 20),
 
                   // User details with icons
-                  _buildDetailRow(Icons.person_outline, 'ID: ${user.id}'),
-                  SizedBox(height: 10),
-                  _buildDetailRow(Icons.person, 'Name: ${user.name}'),
-                  SizedBox(height: 10),
-                  _buildDetailRow(Icons.email, 'Email: ${user.email}'),
-                  SizedBox(height: 10),
-                  _buildDetailRow(Icons.phone, 'Phone: ${user.phone}'),
-                  SizedBox(height: 10),
                   _buildDetailRow(
-                      Icons.person_pin, 'Username: ${user.username}'),
+                    Icons.person_outline, 
+                    'ID: ${user.id}'),
+                  SizedBox(height: 10),
+
+                  _buildDetailRow(Icons.person, 
+                  'Name: ${user.name}'),
+                  SizedBox(height: 10),
+
+                  _buildDetailRow(Icons.email, 
+                  'Email: ${user.email}'),
+                  SizedBox(height: 10),
+
+                  _buildDetailRow(Icons.phone, 
+                  'Phone: ${user.phone}'),
+                  SizedBox(height: 10),
+
+                  _buildDetailRow(
+                      Icons.person_pin, 
+                      'Username: ${user.username}'),
                   SizedBox(height: 20),
 
                   // Custom Elevated Button

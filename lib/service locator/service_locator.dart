@@ -17,6 +17,6 @@ Future<void> setup() async {
   // Register UserRepository
   getIt.registerLazySingleton<UserRepository>(() => UserRepository(userDao: getIt<UserDao>()));
 
-  // Ensure that the database and other dependencies are ready before proceeding
+  // Ensure database and other dependencies are ready before proceeding
   await getIt.isReady<AppDatabase>();
 }

@@ -1,0 +1,89 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "com.example.rfc_cc"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs { 
+            //HITS
+            hitsRelease {
+                storeFile file(project.hasProperty("KEYSTORE_PATH") ? project.KEYSTORE_PATH : "defaultPassword")
+                keyAlias 'hits'
+                storePassword project.hasProperty("KEYSTORE_PASSWORD") ? project.KEYSTORE_PASSWORD : "defaultPassword"
+                keyPassword project.hasProperty("KEY_PASSWORD") ? project.KEY_PASSWORD : "defaultPassword"// Replace with your key password
+            }
+
+            puRelease {
+                storeFile file(project.hasProperty("KEYSTORE_PATH") ? project.KEYSTORE_PATH : "defaultPassword")
+                keyAlias 'pu'
+                storePassword project.hasProperty("KEYSTORE_PASSWORD") ? project.KEYSTORE_PASSWORD : "defaultPassword"
+                keyPassword project.hasProperty("KEY_PASSWORD") ? project.KEY_PASSWORD : "defaultPassword"// Replace with your key password
+            }
+
+    }
+    flavorDimensions "client"
+    productFlavors {
+
+        rfccc {
+            dimension "client"
+            applicationId "com.iitms.rfccc"
+            versionName "1.0-rfccc"
+        }
+        hits {
+            dimension "client"
+             applicationId "com.iitms.hits"
+            versionName "1.0-hits"
+            signingConfig signingConfigs.hitsRelease
+        }
+
+        pu {
+            dimension "client"
+            applicationId "com.iitms.pu"
+            versionName "1.0-pu"
+            signingConfig signingConfigs.puRelease
+        }
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId = "com.example.rfc_cc"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.hitsRelease
+        }
+        debug {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}

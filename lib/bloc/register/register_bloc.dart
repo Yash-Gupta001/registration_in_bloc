@@ -58,9 +58,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         password: event.user.password,
       ));
     } catch (e) {
-      // Emit failure state if there's an error
       emit(RegisterFailure(error: 'Registration failed: ${e.toString()}'));
-      print(e.toString());
     }
   }
 }

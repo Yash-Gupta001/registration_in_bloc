@@ -14,7 +14,6 @@ void main() async {
     runApp(const MyApp());
   } catch (e) {
     // Handle the error in case setup fails
-    print('Failed to initialize app: $e');
     runApp(const MyApp(isError: true));
   }
 }

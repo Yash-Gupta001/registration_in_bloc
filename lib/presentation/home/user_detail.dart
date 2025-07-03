@@ -105,7 +105,6 @@ class Userdetails extends StatelessWidget {
                       ),
                       (route) => false, // Removes all previous routes
                     );
-                    print("button pressed");
                   },
                   onCancel: () {
                     Navigator.pop(context);
